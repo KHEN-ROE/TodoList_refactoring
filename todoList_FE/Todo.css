@@ -1,0 +1,81 @@
+*{
+    margin: 0px;
+    padding: 0px;
+}
+
+.todo {
+    /* display: flex;
+    justify-content: top;
+    align-items: center;
+    flex-direction: column; */
+    border: solid 1px black;
+    border-radius: 10px;
+    width: 70%;
+    margin-left: 280px;
+    margin-top: 50px;
+    height: 20%;
+    background-color: cornsilk;
+}
+
+.thead {
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    font-size: 30px;
+}
+
+.form {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+     
+}
+
+input {
+    width: 650px;
+    height: 40px;
+    margin-right: 10px;
+    border-radius: 10px;
+}
+
+button {
+    height: 30px;
+    padding: 5px;
+    border-radius: 5px;
+    margin-left: 5px;
+}
+
+.logbutton {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.list {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 15px;
+}
+
+li {
+    font-size: 25px;
+    font-weight: bold;
+    list-style-type: none;
+    /* border: solid 1px black;
+    border-radius: 10px; */
+    margin-bottom: 5px;
+    
+}
+
+.logoutbtn {
+    display: flex;
+    justify-content: right;
+}
+
+input[type='text'] {
+    text-align: left;
+    padding-left: 7px;
+}
