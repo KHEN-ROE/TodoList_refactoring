@@ -19,7 +19,6 @@ import edu.pnu.dto.TodoListDto;
 import edu.pnu.service.TodoListService;
 import lombok.RequiredArgsConstructor;
 
-@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequiredArgsConstructor
 public class TodoListController {
