@@ -1,6 +1,9 @@
 # TodoList
 > 본 TodoList 애플리케이션은 사용자가 할 일을 추가, 수정, 삭제할 수 있는 웹 애플리케이션입니다.
 
+![ddddd](https://github.com/KHEN-ROE/TodoList_refactoring/assets/73014470/d1eafabd-b6e4-43ec-a845-84fd30d0f11b)
+
+
 ## 시작하기
 
 > 본 애플리케이션은 React와 Spring Boot를 연결하여 개발하였습니다.
