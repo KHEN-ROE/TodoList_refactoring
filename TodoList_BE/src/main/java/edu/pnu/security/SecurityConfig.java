@@ -34,6 +34,9 @@ public class SecurityConfig {
 
 	
 	private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+
+	@Value("${jwt.secret}")
+  	private String token;
 	
     @Bean
     // 스프링 시큐리티에서 요청을 처리하기 위해 필요한 필터들의 체인
@@ -78,7 +81,7 @@ public class SecurityConfig {
     @Bean
     JwtDecoder jwtDecoder() {
     	// 비밀 키 생성
-        SecretKey secretKey = Keys.hmacShaKeyFor("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".getBytes(StandardCharsets.UTF_8));
+        SecretKey secretKey = Keys.hmacShaKeyFor(token.getBytes(StandardCharsets.UTF_8));
         
         // 비밀 키를 이용한 JWT 디코더를 생성
         NimbusJwtDecoder jwtDecoder = NimbusJwtDecoder.withSecretKey(secretKey).build();
@@ -96,7 +99,10 @@ public class SecurityConfig {
             public OAuth2TokenValidatorResult validate(Jwt jwt) {
         		// JWT 토큰에서 "aud"라는 claim을 가져와서 문자열 리스트로 저장
                 List<String> audList = jwt.getClaim("aud");
-                String expectedAud = "1050135280688-bgoki6c46rsshsbm68ru5mh075qnhlvn.apps.googleusercontent.com";
+
+		@Value("${spring.security.oauth2.client.registration.google.client-id}")    
+                String expectedAud;
+		    
                 if (audList != null && audList.contains(expectedAud)) {
                     return OAuth2TokenValidatorResult.success(); // audience가 유효하면 검증 결과를 성공으로 반환
                 } else {
