@@ -25,6 +25,9 @@ import io.jsonwebtoken.security.Keys;
 @RestController
 public class AuthController {
 
+	@Value("${jwt.secret}")
+  	private String token;
+
 	@GetMapping("/loginSuccess")
 	public RedirectView loginSuccess(@AuthenticationPrincipal OAuth2User principal, HttpServletResponse response) { 
 		// @AuthenticationPrincipal OAuth2User principal 파라미터는 인증된 사용자의 정보를 담고 있다
@@ -34,7 +37,7 @@ public class AuthController {
 
 		// JWT 디코딩 및 "aud" 클레임 값 출력
 		SecretKey secretKey = Keys // 시크릿 키 생성 (토큰 서명에 사용)
-				.hmacShaKeyFor("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".getBytes(StandardCharsets.UTF_8));
+				.hmacShaKeyFor(token.getBytes(StandardCharsets.UTF_8));
 		JwtParser parser = Jwts.parserBuilder().setSigningKey(secretKey).build(); // JWT 파서 빌더에 시크릿 키를 설정하고 파서를 빌드
 		Jws<Claims> jws = parser.parseClaimsJws(JWT); // JWT 파싱을 통해 JWS 객체를 얻음
 		String audClaim = jws.getBody().get("aud", String.class); // JWS에서 클레임을 가져와 "aud" 클레임 값을 가져옴
@@ -63,8 +66,9 @@ public class AuthController {
 		Instant expiry = now.plus(1, ChronoUnit.HOURS); // 현재 시간에 1시간을 더하여 만료 시간을 설정
 
 		SecretKey secretKey = Keys
-				.hmacShaKeyFor("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".getBytes(StandardCharsets.UTF_8));
-		final String AUDIENCE = "1050135280688-bgoki6c46rsshsbm68ru5mh075qnhlvn.apps.googleusercontent.com";
+				.hmacShaKeyFor(token.getBytes(StandardCharsets.UTF_8));
+		@Value("${spring.security.oauth2.client.registration.google.client-id}")
+		final String AUDIENCE
 
 		String jwt = Jwts.builder().setSubject(email)
 				.claim("name", name) 
