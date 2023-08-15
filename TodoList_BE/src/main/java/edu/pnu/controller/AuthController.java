@@ -30,7 +30,7 @@ public class AuthController {
 	@Value("${jwt.secret}")
   	private String token;
 
-	@GetMapping("/loginSuccess")
+	@PostMapping("/loginSuccess")
 	public ResponseEntity<String> loginSuccess(@AuthenticationPrincipal OAuth2User principal, HttpServletResponse response) { 
 		// @AuthenticationPrincipal OAuth2User principal 파라미터는 인증된 사용자의 정보를 담고 있다
 																						
