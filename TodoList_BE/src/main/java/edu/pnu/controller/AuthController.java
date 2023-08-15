@@ -25,11 +25,13 @@ import io.jsonwebtoken.security.Keys;
 @RestController
 public class AuthController {
 
+	private static final String REDIRECT_URI = "http://localhost:3000";
+
 	@Value("${jwt.secret}")
   	private String token;
 
-	@GetMapping("/loginSuccess")
-	public RedirectView loginSuccess(@AuthenticationPrincipal OAuth2User principal, HttpServletResponse response) { 
+	@PostMapping("/loginSuccess")
+	public ResponseEntity<String> loginSuccess(@AuthenticationPrincipal OAuth2User principal, HttpServletResponse response) { 
 		// @AuthenticationPrincipal OAuth2User principal 파라미터는 인증된 사용자의 정보를 담고 있다
 																						
 		// JWT 생성
@@ -49,9 +51,10 @@ public class AuthController {
 	    jwtCookie.setPath("/");         // 전체 사이트에서 쿠키 접근 가능
 	    response.addCookie(jwtCookie);  // 응답에 쿠키 추가
 
-	    // 리액트 애플리케이션으로 리다이렉트
-	    RedirectView redirectView = new RedirectView("http://localhost:3000");
-	    return redirectView;
+	    return ResponseEntity.status(HttpStatus.TEMPORARY_REDIRECT)
+                .header(HttpHeaders.SET_COOKIE, JWT)
+                .location(URI.create(REDIRECT_URI))
+                .body("login success");
 	}
 
 	//OAuth 2.0을 통해 얻은 사용자 정보를 기반으로 JWT 토큰을 생성
