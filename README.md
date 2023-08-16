@@ -38,7 +38,7 @@ git clone https://github.com/KHEN-ROE/TodoList.git
 > 2. 프론트엔드 디렉토리에서 필요한 패키지를 설치합니다.
 ```javascript
 npm install
-npm install jwt-decode
+npm install axios
 ```
 <br />
 
