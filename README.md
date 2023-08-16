@@ -42,27 +42,8 @@ npm install axios
 ```
 <br />
 
-> 3. application.properties 설정을 다음과 같이 저장합니다.
-```javascript
-spring.main.web-application-type=servlet
-server.port=8080
-spring.main.banner-mode=off
-spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
-spring.datasource.url=jdbc:mysql://localhost:3306/db_name?serverTimezone=UTC&characterEncoding=UTF-8
-spring.datasource.username=your_name
-spring.datasource.password=your_password
-spring.jpa.hibernate.ddl-auto=update
-spring.jpa.generate-ddl=false
-spring.jpa.show-sql=true
-spring.jpa.properties.hibernate.format_sql=true
-spring.jpa.database-platform=org.hibernate.dialect.MySQL8Dialect
-logging.level.org.hibernate=INFO
-logging.level.org.springframework.security=debug
-spring.servlet.multipart.enabled=false
-spring.servlet.multipart.location=C:/upload/
-spring.servlet.multipart.max-request-size=30MB
-spring.servlet.multipart.max-file-size=10MB
-```
+> 3. application.properties 파일을 개인의 환경에 맞게 설정합니다.
+
 <br />
 
 > 4. 리액트와 스프링부트 프로젝트를 각각 실행합니다.
