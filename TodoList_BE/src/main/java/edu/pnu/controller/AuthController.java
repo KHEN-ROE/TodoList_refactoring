@@ -33,6 +33,9 @@ public class AuthController {
 	@GetMapping("/loginSuccess")
 	public ResponseEntity<String> loginSuccess(@AuthenticationPrincipal OAuth2User principal, HttpServletResponse response) { 
 		// @AuthenticationPrincipal OAuth2User principal 파라미터는 인증된 사용자의 정보를 담고 있다
+
+		// 인증된 사용자의 이메일을 추출
+    		String userEmail = principal.getAttribute("email");
 																						
 		// JWT 생성
 		String JWT = createJWT(principal);
@@ -54,7 +57,7 @@ public class AuthController {
 	    return ResponseEntity.status(HttpStatus.TEMPORARY_REDIRECT)
                 .header(HttpHeaders.SET_COOKIE, JWT)
                 .location(URI.create(REDIRECT_URI))
-                .body("login success");
+                .body(userEmail);
 	}
 
 	//OAuth 2.0을 통해 얻은 사용자 정보를 기반으로 JWT 토큰을 생성
