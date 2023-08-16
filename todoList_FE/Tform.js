@@ -5,55 +5,62 @@ const Tform = () => {
   const [todos, setTodos] = useState([]); // 입력값을 담을 배열
   const [newTodo, setNewTodo] = useState('');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userEmail, setUserEmail] = useState('');
+
 
   useEffect(() => {
       setIsLoggedIn(true)
   }, []);
 
   useEffect(() => {
-    if (isLoggedIn) {
-      fetch('/api/todos')
-        .then((response) => response.json())
-        .then((data) => setTodos(data));
-    }
-  }, [isLoggedIn]);
+  if (isLoggedIn) {
+    axios.get('/loginSuccess')
+      .then((response) => {
+        setUserEmail(response.data);
+        return axios.get('/api/todos');
+      })
+      .then((response) => {
+        setTodos(response.data);
+      });
+  }
+}, [isLoggedIn]);
 
 
   const addTodo = (e) => {
-    e.preventDefault();
-    if(newTodo.trim() !== ''){
-      axios.post('/api/todos', { text: newTodo })
-        .then(response => {
-          setTodos([...todos, response.data]);
-          setNewTodo('');
-        });
-    }
+  e.preventDefault();
+  if(newTodo.trim() !== ''){
+    axios.post('/api/todos', { text: newTodo, email: userEmail })
+      .then(response => {
+        setTodos([...todos, response.data]);
+        setNewTodo('');
+      });
   }
+}
 
   const deleteTodo = (id) => {
-    axios.delete(`/api/todos/${id}`)
-      .then(() => {
-        const updatedTodos = todos.filter(todo => todo.id !== id);
+  axios.delete(`/api/todos/${id}`, { data: { email: userEmail } })
+    .then(() => {
+      const updatedTodos = todos.filter(todo => todo.id !== id);
+      setTodos(updatedTodos);
+    });
+}
+
+  const editTodo = (id) => {
+  const updatedText = prompt("수정할 텍스트 입력:");
+  if (updatedText) {
+    axios.put(`/api/todos/${id}`, { text: updatedText, email: userEmail })
+      .then(response => {
+        const updatedTodos = todos.map(todo => {
+          if (todo.id === id) {
+            return { ...todo, text: response.data.text };
+          } else {
+            return todo;
+          }
+        });
         setTodos(updatedTodos);
       });
   }
-
-  const editTodo = (id) => {
-    const updatedText = prompt("수정할 텍스트 입력:");
-    if (updatedText) {
-      axios.put(`/api/todos/${id}`, { text: updatedText })
-        .then(response => {
-          const updatedTodos = todos.map(todo => {
-            if (todo.id === id) {
-              return { ...todo, text: response.data.text };
-            } else {
-              return todo;
-            }
-          });
-          setTodos(updatedTodos);
-        });
-    }
-  }
+}
   
   return (
     <div className='form'>
