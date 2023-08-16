@@ -61,7 +61,6 @@ npm install axios
   - Backend: Spring Boot
   - Database: MySQL
   - 인증 및 로그인: OAuth 2.0
-  - AWS(예정)
  
  ## OAuth 2.0을 사용한 구글 계정 로그인 과정
  ```javascript
